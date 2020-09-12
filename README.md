@@ -13,6 +13,9 @@ To run this project, you need installed:
 
 Then, just call **`mvn package exec:java`**
 
+Alternatively, you can install **`IntelliJ IDEA 2020`**,
+go to the menu **`File -> New -> Project from Existing Sources`** and select the **`pom.xml`** project file.
+
 After starting the project, the API will be available on the URL: `http://127.0.0.1:8081/researcher/<API_NAME>`
 
 See the **`src/main/resources/application.properties`** file for server configurations.
