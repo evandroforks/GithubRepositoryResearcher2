@@ -6,7 +6,7 @@ public class Repository {
 
   private String shortDescription;
 
-  private int starsCount;
+  private int stargazersCount;
 
   public String getNameWithOwner() {
     return nameWithOwner;
@@ -24,11 +24,11 @@ public class Repository {
     this.shortDescription = shortDescription;
   }
 
-  public int getStarsCount() {
-    return starsCount;
+  public int getStargazersCount() {
+    return stargazersCount;
   }
 
-  public void setStarsCount(int starsCount) {
-    this.starsCount = starsCount;
+  public void setStargazersCount(int stargazersCount) {
+    this.stargazersCount = stargazersCount;
   }
 }

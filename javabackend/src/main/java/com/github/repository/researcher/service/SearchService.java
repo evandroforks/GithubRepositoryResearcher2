@@ -50,7 +50,7 @@ public class SearchService {
 
       repository.setNameWithOwner(repository_fullname);
       repository.setShortDescription(item.getString("description"));
-      repository.setStarsCount(item.getInt("stargazers_count"));
+      repository.setStargazersCount(item.getInt("stargazers_count"));
 
       repositories.add(repository);
       break;

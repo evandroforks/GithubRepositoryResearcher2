@@ -75,7 +75,7 @@ export class Content extends React.Component<RepositoryItemProps, RepositoryItem
         <h5 style={{ marginBottom: 0 }}>
           {this.props.index + this.props.pageOffSet + 1}. { }
           {this.props.repository.nameWithOwner.replace("/", " / ")} { }
-          ({this.props.repository.stargazers.totalCount.toLocaleString()} stars)
+          ({this.props.repository.stargazersCount.toLocaleString()} stars)
         </h5>
 
         <p>{this.props.repository.description}</p>

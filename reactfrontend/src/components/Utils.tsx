@@ -59,7 +59,7 @@ export interface MenuItem {
 export interface Repository{
   nameWithOwner: string,
   description: string,
-  stargazers: { totalCount: number },
+  stargazersCount: number,
 }
 
 export interface RepositoryResults{
