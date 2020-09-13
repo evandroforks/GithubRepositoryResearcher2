@@ -1,16 +1,11 @@
 package com.github.repository.researcher.model;
 
-import javax.persistence.Column;
-
 public class Repository {
 
-  @Column(nullable = false)
   private String name;
 
-  @Column(nullable = false)
   private String shortDescription;
 
-  @Column(nullable = false)
   private int starsCount;
 
   public String getName() {
