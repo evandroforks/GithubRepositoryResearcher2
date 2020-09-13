@@ -1,5 +1,7 @@
 package com.github.repository.researcher.controller;
 
+import com.github.repository.researcher.model.DetailRequest;
+import com.github.repository.researcher.model.DetailResults;
 import com.github.repository.researcher.model.Repository;
 import com.github.repository.researcher.model.SearchResults;
 import com.github.repository.researcher.model.SearchRequest;
@@ -46,5 +48,27 @@ public class SearchController {
     searchResults.setRepositories(repositories);
     searchResults.setRateLimit("");
     return searchResults;
+  }
+
+  /**
+   * {@code POST} end point to get more details about a repository.
+   *
+   * <p>It receives a full {@link DetailRequest} object as a JSON representation, respecting the
+   * required field from {@link DetailRequest}. Example of {@code POST} request body:
+   *
+   * <pre>{@code
+   * {
+   *     "nameWithOwner": "actions/cache"
+   * }
+   * }</pre>
+   *
+   * <p>Returns a JSON detailing the repository found. See {@link Repository} for a list of
+   * attributes.
+   */
+  @PostMapping("/detailRepository")
+  @ResponseStatus(HttpStatus.CREATED)
+  public DetailResults runDetailRepository(@RequestBody DetailRequest detailRequest)
+      throws IOException {
+    return searchService.detail(detailRequest);
   }
 }

@@ -1,6 +1,9 @@
 package com.github.repository.researcher.service;
 
+import com.github.repository.researcher.model.DetailRequest;
+import com.github.repository.researcher.model.DetailResults;
 import com.github.repository.researcher.model.Repository;
+import com.github.repository.researcher.model.RepositoryResults;
 import com.github.repository.researcher.model.SearchRequest;
 import com.jcabi.github.Github;
 import com.jcabi.github.RtGithub;
@@ -11,6 +14,7 @@ import javax.json.JsonObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Controls the GitHub Search business logic.
@@ -60,5 +64,39 @@ public class SearchService {
       break;
     }
     return repositories;
+  }
+
+  public DetailResults detail(DetailRequest detailRequest) throws IOException {
+    final Github github = new RtGithub();
+    DetailResults detailResults = new DetailResults();
+
+    final JsonObject repositoryInfo =
+        github
+            .entry()
+            .uri()
+            .path("/repos/" + detailRequest.getNameWithOwner())
+            .back()
+            .fetch()
+            .as(JsonResponse.class)
+            .json()
+            .readObject();
+
+    detailResults.setCreatedAt(repositoryInfo.getString("created_at"));
+    detailResults.setOpenIssuesCount(repositoryInfo.getInt("open_issues"));
+
+    final JsonObject repositoryLanguagesJson =
+        github
+            .entry()
+            .uri()
+            .path("/repos/" + detailRequest.getNameWithOwner() + "/languages")
+            .back()
+            .fetch()
+            .as(JsonResponse.class)
+            .json()
+            .readObject();
+
+    Set<String> repositoryLanguagesSet = repositoryLanguagesJson.keySet();
+    detailResults.setMainLanguage(repositoryLanguagesSet.iterator().next());
+    return detailResults;
   }
 }

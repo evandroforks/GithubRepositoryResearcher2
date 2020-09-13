@@ -4,10 +4,8 @@ import { Repository, prettyPrintError, extendArray } from "./Utils";
 interface RepositoryDetails {
   rateLimit: string,
   createdAt: string,
-  issues: { totalCount: number },
-  languages: {
-      nodes: Array< { name: string } >,
-  },
+  openIssuesCount: number,
+  mainLanguage: string,
 }
 
 interface UserRepository {
@@ -82,13 +80,8 @@ export class Content extends React.Component<RepositoryItemProps, RepositoryItem
         {this.state.repositoryDetails != null && this.state.isShowingDetails && (
           <div>
             <b>Created at</b>: {this.state.repositoryDetails?.createdAt.replace(/(?<=-\d\d)T|(?<=:\d\d)Z/g, ", ")}
-            <b>Open Issues count</b>: {this.state.repositoryDetails?.issues.totalCount}, { }
-            <b>Top Language</b>: {this.state.repositoryDetails?.languages.nodes.map( (item: { name: string }, index: number) => {
-                return (
-                  <span key={item.name + index}>{item.name}, </span>
-                )
-              }
-            )}
+            <b>Open Issues count</b>: {this.state.repositoryDetails?.openIssuesCount}, { }
+            <b>Top Language</b>: {this.state.repositoryDetails?.mainLanguage}, { }
             <b>User Repositories</b>: {this.state.userRepositories.map((item: { name: string }, index: number) => {
                 return (
                   <span key={item.name + index}><b>{index + 1})</b> { } {item.name}, </span>
@@ -142,13 +135,12 @@ export class Content extends React.Component<RepositoryItemProps, RepositoryItem
     // console.log("Sending loadMoreDetails for", this.props.repository.nameWithOwner)
 
     fetch(
-      this.props.getBackEndUrl() + "/detail_repository",
+      this.props.getBackEndUrl() + "/detailRepository",
       {
         method: 'POST',
         body: JSON.stringify(
           {
-            repositoryUser: this.props.repository.nameWithOwner.split("/")[0],
-            repositoryName: this.props.repository.nameWithOwner.split("/")[1],
+            nameWithOwner: this.props.repository.nameWithOwner,
           }
         ),
         headers: {

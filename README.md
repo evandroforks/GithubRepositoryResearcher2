@@ -33,4 +33,5 @@ See the **`src/main/resources/application.properties`** file for server configur
 ### Restful API
 
 1. **`/searchRequest`** is Restful endpoint. See **`SearchController`** and **`SearchRequest`** for the parameter details.
+1. **`/detailRequest`** is Restful endpoint. See **`SearchController`** and **`DetailRequest`** for the parameter details.
 
