@@ -69,7 +69,7 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   getBackEndUrl() {
-    return `http://${this.backEndIp}:${this.backEndPort}`;
+    return `http://${this.backEndIp}:${this.backEndPort}/researcher`;
   }
 
   componentDidMount() {
@@ -268,14 +268,14 @@ class App extends React.Component<AppProps, AppState> {
 
     // https://stackoverflow.com/questions/39565706/post-request-with-fetch-api
     fetch(
-      this.getBackEndUrl() + "/search_github",
+      this.getBackEndUrl() + "/searchRequest",
       {
         method: 'POST',
         body: JSON.stringify(
           {
-            searchQuery: searchQuery,
-            lastItemId: this.lastItemId,
-            itemsPerPage: this.itemsPerPage,
+            query: searchQuery,
+            // lastItemId: this.lastItemId,
+            // itemsPerPage: this.itemsPerPage,
           }
           ),
           headers: {

@@ -1,6 +1,7 @@
 package com.github.repository.researcher.controller;
 
 import com.github.repository.researcher.model.Repository;
+import com.github.repository.researcher.model.SearchResults;
 import com.github.repository.researcher.model.SearchRequest;
 import com.github.repository.researcher.service.SearchService;
 import org.springframework.http.HttpStatus;
@@ -38,8 +39,12 @@ public class SearchController {
    */
   @PostMapping("/searchRequest")
   @ResponseStatus(HttpStatus.CREATED)
-  public ArrayList<Repository> runSearchRequest(@RequestBody SearchRequest searchRequest)
+  public SearchResults runSearchRequest(@RequestBody SearchRequest searchRequest)
       throws IOException {
-    return searchService.get(searchRequest);
+    ArrayList<Repository> repositories = searchService.get(searchRequest);
+    SearchResults searchResults = new SearchResults();
+    searchResults.setRepositories(repositories);
+    searchResults.setRateLimit("");
+    return searchResults;
   }
 }
