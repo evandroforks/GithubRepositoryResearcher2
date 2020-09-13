@@ -32,7 +32,7 @@ interface RepositoryItemState {
   hasMorePages: boolean,
   lastItemId: string | null,
   errorMessage: string,
-  userRepositories: Array<{ name: string }>,
+  userRepositories: Array<string>,
   repositoryDetails: RepositoryDetails | null,
   isShowingDetails: boolean,
   isLoadingDetails: boolean,
@@ -82,9 +82,9 @@ export class Content extends React.Component<RepositoryItemProps, RepositoryItem
             <b>Created at</b>: {this.state.repositoryDetails?.createdAt.replace(/(?<=-\d\d)T|(?<=:\d\d)Z/g, ", ")}
             <b>Open Issues count</b>: {this.state.repositoryDetails?.openIssuesCount}, { }
             <b>Top Language</b>: {this.state.repositoryDetails?.mainLanguage}, { }
-            <b>User Repositories</b>: {this.state.userRepositories.map((item: { name: string }, index: number) => {
+            <b>User Repositories</b>: {this.state.userRepositories.map((name: string, index: number) => {
                 return (
-                  <span key={item.name + index}><b>{index + 1})</b> { } {item.name}, </span>
+                  <span key={name + index}><b>{index + 1})</b> { } {name}, </span>
                 )
               }
             )}
@@ -182,14 +182,14 @@ export class Content extends React.Component<RepositoryItemProps, RepositoryItem
     // console.log("Sending loadUserRepositories for", this.props.repository.nameWithOwner)
 
     fetch(
-      this.props.getBackEndUrl() + "/list_repositories",
+      this.props.getBackEndUrl() + "/listRepositories",
       {
         method: 'POST',
         body: JSON.stringify(
           {
-            repositoryUser: this.props.repository.nameWithOwner.split("/")[0],
-            lastItemId: this.state.lastItemId,
-            itemsPerPage: 100,
+            name: this.props.repository.owner,
+            // lastItemId: this.state.lastItemId,
+            // itemsPerPage: 100,
           }
         ),
         headers: {
