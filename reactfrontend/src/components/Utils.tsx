@@ -58,7 +58,7 @@ export interface MenuItem {
 
 export interface Repository{
   nameWithOwner: string,
-  description: string,
+  shortDescription: string,
   stargazersCount: number,
 }
 

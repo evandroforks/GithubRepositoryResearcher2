@@ -78,7 +78,7 @@ export class Content extends React.Component<RepositoryItemProps, RepositoryItem
           ({this.props.repository.stargazersCount.toLocaleString()} stars)
         </h5>
 
-        <p>{this.props.repository.description}</p>
+        <p>{this.props.repository.shortDescription}</p>
         {this.state.repositoryDetails != null && this.state.isShowingDetails && (
           <div>
             <b>Created at</b>: {this.state.repositoryDetails?.createdAt.replace(/(?<=-\d\d)T|(?<=:\d\d)Z/g, ", ")}
