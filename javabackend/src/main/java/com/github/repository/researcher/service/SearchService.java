@@ -45,10 +45,14 @@ public class SearchService {
     for (final JsonObject item : repositoresRaw) {
       Repository repository = new Repository();
 
-      String repository_fullname = item.getString("full_name");
-      System.out.println(String.format("repository found: %s", repository_fullname));
+      String repositoryName = item.getString("name");
+      String repositoryOwner = item.getJsonObject("owner").getString("login");
+      String repositoryNameWithOwner = item.getString("full_name");
+      System.out.println(String.format("repository found: %s/%s", repositoryName, repositoryOwner));
 
-      repository.setNameWithOwner(repository_fullname);
+      repository.setName(repositoryName);
+      repository.setOwner(repositoryOwner);
+      repository.setNameWithOwner(repositoryNameWithOwner);
       repository.setShortDescription(item.getString("description"));
       repository.setStargazersCount(item.getInt("stargazers_count"));
 

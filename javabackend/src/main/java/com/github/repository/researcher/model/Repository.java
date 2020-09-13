@@ -2,6 +2,10 @@ package com.github.repository.researcher.model;
 
 public class Repository {
 
+  private String name;
+
+  private String owner;
+
   private String nameWithOwner;
 
   private String shortDescription;
@@ -30,5 +34,21 @@ public class Repository {
 
   public void setStargazersCount(int stargazersCount) {
     this.stargazersCount = stargazersCount;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getOwner() {
+    return owner;
+  }
+
+  public void setOwner(String owner) {
+    this.owner = owner;
   }
 }
