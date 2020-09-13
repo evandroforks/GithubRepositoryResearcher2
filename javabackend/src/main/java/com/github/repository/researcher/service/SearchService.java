@@ -48,7 +48,7 @@ public class SearchService {
       String repository_fullname = item.getString("full_name");
       System.out.println(String.format("repository found: %s", repository_fullname));
 
-      repository.setName(repository_fullname);
+      repository.setNameWithOwner(repository_fullname);
       repository.setShortDescription(item.getString("description"));
       repository.setStarsCount(item.getInt("stargazers_count"));
 

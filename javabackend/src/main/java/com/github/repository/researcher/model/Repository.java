@@ -2,18 +2,18 @@ package com.github.repository.researcher.model;
 
 public class Repository {
 
-  private String name;
+  private String nameWithOwner;
 
   private String shortDescription;
 
   private int starsCount;
 
-  public String getName() {
-    return name;
+  public String getNameWithOwner() {
+    return nameWithOwner;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setNameWithOwner(String name) {
+    this.nameWithOwner = name;
   }
 
   public String getShortDescription() {
