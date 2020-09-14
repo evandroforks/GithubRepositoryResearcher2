@@ -11,7 +11,11 @@ import com.jcabi.github.Github;
 import com.jcabi.github.RtGithub;
 import com.jcabi.http.Response;
 import com.jcabi.http.response.JsonResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -31,6 +35,7 @@ import java.util.Set;
  */
 @Service
 public class SearchService {
+  private static final Logger logger = LoggerFactory.getLogger(SearchService.class);
 
   public SearchService() {}
 
@@ -48,6 +53,8 @@ public class SearchService {
             .queryParam("per_page", searchRequest.getItemsPerPage())
             .back()
             .fetch();
+
+    this.checkRateLimit(repositoresRawRequest);
 
     final JsonObject repositoriesRawJson =
         repositoresRawRequest
@@ -91,18 +98,23 @@ public class SearchService {
     final Github github = new RtGithub();
     DetailResults detailResults = new DetailResults();
 
-    final JsonObject repositoryInfo =
+    final Response repositoryInfoResponse =
         github
             .entry()
             .uri()
             .path("/repos/" + detailRequest.getNameWithOwner())
             .back()
-            .fetch()
+            .fetch();
+
+    this.checkRateLimit(repositoryInfoResponse);
+
+    final JsonObject repositoryInfo =
+        repositoryInfoResponse
             .as(JsonResponse.class)
             .json()
             .readObject();
 
-    detailResults.setCreatedAt(repositoryInfo.getString("created_at"));
+        detailResults.setCreatedAt(repositoryInfo.getString("created_at"));
     detailResults.setOpenIssuesCount(repositoryInfo.getInt("open_issues"));
 
     final JsonObject repositoryLanguagesJson =
@@ -135,6 +147,8 @@ public class SearchService {
             .back()
             .fetch();
 
+    this.checkRateLimit(userRepositoriesRequest);
+
     final JsonArray userRepositories =
         userRepositoriesRequest
             .as(JsonResponse.class)
@@ -155,5 +169,13 @@ public class SearchService {
     Map<String, List<String>> headers = userRepositoriesRequest.headers();
     String link = headers.get("Link").toString();
     return link.contains("last");
+  }
+
+  private void checkRateLimit(Response response) {
+    if(response.status() == 403) {
+      final String errorMessage = String.format("Error: GitHub Rate Limit Usage exceeded!");
+      logger.warn(errorMessage);
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errorMessage);
+    }
   }
 }
