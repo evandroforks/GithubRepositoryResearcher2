@@ -45,10 +45,7 @@ public class SearchController {
   @ResponseStatus(HttpStatus.CREATED)
   public SearchResults runSearchRequest(@RequestBody SearchRequest searchRequest)
       throws IOException {
-    ArrayList<Repository> repositories = searchService.get(searchRequest);
-    SearchResults searchResults = new SearchResults();
-    searchResults.setRepositories(repositories);
-    return searchResults;
+    return searchService.get(searchRequest);
   }
 
   /**

@@ -30,8 +30,8 @@ class App extends React.Component<AppProps, AppState> {
   private backEndPort: string;
   private backEndIp: string;
   private itemsPerPage: number;
-  private oldItemId: string | null;
-  private lastItemId: string | null;
+  private previousPage: number;
+  private nextPage: number;
   private hasMorePages: boolean;
   private actualSearchPage: number;
 
@@ -50,8 +50,8 @@ class App extends React.Component<AppProps, AppState> {
 
     this.hasSendSearchQuery = false
     this.searchQuery = ""
-    this.lastItemId = null
-    this.oldItemId = null
+    this.nextPage = 1
+    this.previousPage = 0
     this.itemsPerPage = 10
     this.hasMorePages = false
     this.actualSearchPage = 0
@@ -64,7 +64,7 @@ class App extends React.Component<AppProps, AppState> {
       windowHeight: 0,
       errorMessage: "",
       isSearching: false,
-      repositoryResults: {lastItemId: null, hasMorePages: false, repositoryCount: 0, repositories: []}
+      repositoryResults: {nextPage: 1, hasMorePages: false, repositoryCount: 0, repositories: []}
     };
   }
 
@@ -234,7 +234,7 @@ class App extends React.Component<AppProps, AppState> {
   nextSearchPage(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     if(this.hasMorePages) {
       this.actualSearchPage += 1
-      this.oldItemId = this.lastItemId
+      this.previousPage = this.nextPage
 
       this.sendSearchQuery(this.searchQuery, false)
     }
@@ -245,11 +245,11 @@ class App extends React.Component<AppProps, AppState> {
       this.actualSearchPage -= 1
 
       if(this.actualSearchPage === 0){
-        this.lastItemId = null
+        this.nextPage = 1
         this.hasMorePages = false
       }
       else {
-        this.lastItemId = this.oldItemId
+        this.nextPage = this.previousPage
       }
 
       this.sendSearchQuery(this.searchQuery, false)
@@ -257,9 +257,9 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   sendSearchQuery(searchQuery: string, restart = true) {
-    // console.log("Sending searchQuery", searchQuery, "lastItemId", this.lastItemId)
+    // console.log("Sending searchQuery", searchQuery, "nextPage", this.nextPage)
     if(restart && this.searchQuery === searchQuery) {
-      this.lastItemId = null
+      this.nextPage = 1
       this.hasMorePages = false
     }
 
@@ -274,7 +274,7 @@ class App extends React.Component<AppProps, AppState> {
         body: JSON.stringify(
           {
             query: searchQuery,
-            // lastItemId: this.lastItemId,
+            page: this.nextPage,
             // itemsPerPage: this.itemsPerPage,
           }
           ),
@@ -295,7 +295,7 @@ class App extends React.Component<AppProps, AppState> {
           repositories_response.then(
             (response: RepositoryResults) => {
               // console.log('Server response:', response);
-              this.lastItemId = response.lastItemId
+              this.nextPage = response.nextPage
               this.hasMorePages = response.hasMorePages
 
               this.setState({

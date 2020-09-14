@@ -5,6 +5,7 @@ import com.github.repository.researcher.model.DetailResults;
 import com.github.repository.researcher.model.RepositoriesList;
 import com.github.repository.researcher.model.Repository;
 import com.github.repository.researcher.model.SearchRequest;
+import com.github.repository.researcher.model.SearchResults;
 import com.github.repository.researcher.model.UserRequest;
 import com.jcabi.github.Github;
 import com.jcabi.github.RtGithub;
@@ -33,17 +34,22 @@ public class SearchService {
 
   public SearchService() {}
 
-  public ArrayList<Repository> get(SearchRequest searchRequest) throws IOException {
+  public SearchResults get(SearchRequest searchRequest) throws IOException {
     final Github github = new RtGithub();
+    SearchResults searchResults = new SearchResults();
 
-    final List<JsonObject> repositoresRaw =
+    final Response repositoresRawRequest =
         github
             .entry()
             .uri()
             .path("/search/repositories")
             .queryParam("q", searchRequest.getQuery())
+            .queryParam("page", searchRequest.getPage())
             .back()
-            .fetch()
+            .fetch();
+
+    final List<JsonObject> repositoresRaw =
+        repositoresRawRequest
             .as(JsonResponse.class)
             .json()
             .readObject()
@@ -68,7 +74,11 @@ public class SearchService {
       repositories.add(repository);
       break;
     }
-    return repositories;
+
+    searchResults.setHasMorePages(this.hasMorePages(repositoresRawRequest));
+    searchResults.setNextPage(searchRequest.getPage() + 1);
+    searchResults.setRepositories(repositories);
+    return searchResults;
   }
 
   public DetailResults detail(DetailRequest detailRequest) throws IOException {

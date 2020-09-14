@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class SearchResults {
 
-  private String lastItemId;
+  private int nextPage;
 
   private boolean hasMorePages;
 
@@ -12,12 +12,12 @@ public class SearchResults {
 
   private ArrayList<Repository> repositories;
 
-  public String getLastItemId() {
-    return lastItemId;
+  public int getNextPage() {
+    return nextPage;
   }
 
-  public void setLastItemId(String lastItemId) {
-    this.lastItemId = lastItemId;
+  public void setNextPage(int nextPage) {
+    this.nextPage = nextPage;
   }
 
   public boolean isHasMorePages() {
