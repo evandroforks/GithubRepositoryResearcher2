@@ -71,7 +71,6 @@ public class SearchService {
       String repositoryName = item.getString("name");
       String repositoryOwner = item.getJsonObject("owner").getString("login");
       String repositoryNameWithOwner = item.getString("full_name");
-      System.out.println(String.format("repository found: %s/%s", repositoryName, repositoryOwner));
 
       repository.setName(repositoryName);
       repository.setOwner(repositoryOwner);
