@@ -45,6 +45,7 @@ public class SearchService {
             .path("/search/repositories")
             .queryParam("q", searchRequest.getQuery())
             .queryParam("page", searchRequest.getPage())
+            .queryParam("per_page", searchRequest.getItemsPerPage())
             .back()
             .fetch();
 
@@ -72,7 +73,6 @@ public class SearchService {
       repository.setStargazersCount(item.getInt("stargazers_count"));
 
       repositories.add(repository);
-      break;
     }
 
     searchResults.setHasMorePages(this.hasMorePages(repositoresRawRequest));

@@ -52,7 +52,7 @@ class App extends React.Component<AppProps, AppState> {
     this.searchQuery = ""
     this.nextPage = 1
     this.previousPage = 0
-    this.itemsPerPage = 10
+    this.itemsPerPage = 2
     this.hasMorePages = false
     this.actualSearchPage = 0
     this.backEndPort = getEnvironmentVariable("REACT_APP_GITHUB_RESEARCHER_BACKEND_PORT", "8081");
@@ -275,7 +275,7 @@ class App extends React.Component<AppProps, AppState> {
           {
             query: searchQuery,
             page: this.nextPage,
-            // itemsPerPage: this.itemsPerPage,
+            itemsPerPage: this.itemsPerPage,
           }
           ),
           headers: {
