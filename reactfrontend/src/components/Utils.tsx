@@ -56,7 +56,7 @@ export interface MenuItem {
   text: any,
 }
 
-export interface Repository{
+export interface Repository {
   name: string,
   owner: string,
   nameWithOwner: string,
@@ -64,7 +64,7 @@ export interface Repository{
   stargazersCount: number,
 }
 
-export interface RepositoryResults{
+export interface RepositoryResults {
   lastItemId: string | null,
   hasMorePages: boolean,
   repositoryCount: number,
