@@ -48,7 +48,7 @@ class App extends React.Component<AppProps, AppState> {
 
     this.hasSendSearchQuery = false
     this.searchQuery = ""
-    this.itemsPerPage = 2
+    this.itemsPerPage = 10
     this.hasMorePages = false
     this.actualSearchPage = 0
     this.backEndPort = getEnvironmentVariable("REACT_APP_GITHUB_RESEARCHER_BACKEND_PORT", "8081");

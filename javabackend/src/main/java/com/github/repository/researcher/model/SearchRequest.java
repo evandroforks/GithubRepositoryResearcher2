@@ -10,7 +10,7 @@ public class SearchRequest {
 
   public SearchRequest() {
     this.page = 1;
-    this.itemsPerPage = 2;
+    this.itemsPerPage = 10;
   }
 
   public String getQuery() {
