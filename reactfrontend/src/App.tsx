@@ -245,6 +245,11 @@ class App extends React.Component<AppProps, AppState> {
   sendSearchQuery(searchQuery: string, restart = true) {
     // console.log("Sending searchQuery", searchQuery)
 
+    if(restart && this.searchQuery === searchQuery) {
+      this.actualSearchPage = 0
+      this.hasMorePages = false
+    }
+
     this.searchQuery = searchQuery
     this.setState({ isSearching: true })
 
