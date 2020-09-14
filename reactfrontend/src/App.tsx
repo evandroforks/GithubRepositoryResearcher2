@@ -251,7 +251,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     this.searchQuery = searchQuery
-    this.setState({ isSearching: true })
+    this.setState({ isSearching: true, errorMessage: "" })
 
     // https://stackoverflow.com/questions/39565706/post-request-with-fetch-api
     fetch(
@@ -311,7 +311,8 @@ class App extends React.Component<AppProps, AppState> {
     message = message.split(" ").join("&nbsp;");
     message = message.split("\n").join("<br/>");
     if(this) {
-      this.setState({ errorMessage: message })
+      this.hasMorePages = false;
+      this.setState({ errorMessage: message, isSearching: false })
     }
   }
 }
