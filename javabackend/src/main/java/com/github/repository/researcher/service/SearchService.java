@@ -4,11 +4,11 @@ import com.github.repository.researcher.model.DetailRequest;
 import com.github.repository.researcher.model.DetailResults;
 import com.github.repository.researcher.model.RepositoriesList;
 import com.github.repository.researcher.model.Repository;
-import com.github.repository.researcher.model.RepositoryResults;
 import com.github.repository.researcher.model.SearchRequest;
 import com.github.repository.researcher.model.UserRequest;
 import com.jcabi.github.Github;
 import com.jcabi.github.RtGithub;
+import com.jcabi.http.Response;
 import com.jcabi.http.response.JsonResponse;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +18,7 @@ import javax.json.JsonValue;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -109,13 +110,17 @@ public class SearchService {
     ArrayList<String> repositories = new ArrayList<>();
     RepositoriesList repositoriesList = new RepositoriesList();
 
-    final JsonArray userRepositories =
+    final Response userRepositoriesRequest =
         github
             .entry()
             .uri()
             .path("/users/" + userRequest.getName() + "/repos")
+            .queryParam("page", userRequest.getPage())
             .back()
-            .fetch()
+            .fetch();
+
+    final JsonArray userRepositories =
+        userRepositoriesRequest
             .as(JsonResponse.class)
             .json()
             .readArray();
@@ -126,6 +131,14 @@ public class SearchService {
     }
 
     repositoriesList.setRepositories(repositories);
+    repositoriesList.setHasMorePages(this.hasMorePages(userRepositoriesRequest));
+    repositoriesList.setNextPage(userRequest.getPage() + 1);
     return repositoriesList;
+  }
+
+  private boolean hasMorePages(Response userRepositoriesRequest) {
+    Map<String, List<String>> headers = userRepositoriesRequest.headers();
+    String link = headers.get("Link").toString();
+    return link.contains("last");
   }
 }

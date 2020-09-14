@@ -11,7 +11,7 @@ interface RepositoryDetails {
 interface UserRepository {
   rateLimit: string,
   hasMorePages: false,
-  lastItemId: string,
+  nextPage: number,
   repositories: Array<{
     name: string,
   }>,
@@ -30,7 +30,7 @@ interface RepositoryItemProps {
 interface RepositoryItemState {
   itemPage: number,
   hasMorePages: boolean,
-  lastItemId: string | null,
+  nextPage: number,
   errorMessage: string,
   userRepositories: Array<string>,
   repositoryDetails: RepositoryDetails | null,
@@ -53,7 +53,7 @@ export class Content extends React.Component<RepositoryItemProps, RepositoryItem
       isShowingDetails: false,
       errorMessage: "",
       hasMorePages: true,
-      lastItemId: null,
+      nextPage: 1,
       userRepositories: [],
       repositoryDetails: null,
       isLoadingDetails: false,
@@ -188,7 +188,7 @@ export class Content extends React.Component<RepositoryItemProps, RepositoryItem
         body: JSON.stringify(
           {
             name: this.props.repository.owner,
-            // lastItemId: this.state.lastItemId,
+            page: this.state.nextPage,
             // itemsPerPage: 100,
           }
         ),
@@ -214,7 +214,7 @@ export class Content extends React.Component<RepositoryItemProps, RepositoryItem
 
                 this.setState({
                   userRepositories: userRepositories,
-                  lastItemId: response.lastItemId,
+                  nextPage: response.nextPage,
                   hasMorePages: response.hasMorePages,
                   isLoadingRepositories: false,
                 });

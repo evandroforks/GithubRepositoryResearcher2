@@ -97,7 +97,6 @@ public class SearchController {
       throws IOException {
     RepositoriesList list = searchService.list(userRequest);
     list.setRateLimit("");
-    list.setLastItemId("");
     return list;
   }
 }

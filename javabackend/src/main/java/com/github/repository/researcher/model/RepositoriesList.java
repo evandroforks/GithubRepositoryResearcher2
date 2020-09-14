@@ -6,7 +6,7 @@ public class RepositoriesList {
 
   private String rateLimit;
 
-  private String lastItemId;
+  private int nextPage;
 
   private boolean hasMorePages;
 
@@ -20,12 +20,12 @@ public class RepositoriesList {
     this.rateLimit = rateLimit;
   }
 
-  public String getLastItemId() {
-    return lastItemId;
+  public int getNextPage() {
+    return nextPage;
   }
 
-  public void setLastItemId(String lastItemId) {
-    this.lastItemId = lastItemId;
+  public void setNextPage(int nextPage) {
+    this.nextPage = nextPage;
   }
 
   public boolean isHasMorePages() {
