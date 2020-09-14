@@ -83,7 +83,6 @@ public class SearchService {
     }
 
     searchResults.setHasMorePages(this.hasMorePages(repositoresRawRequest));
-    searchResults.setNextPage(searchRequest.getPage() + 1);
     searchResults.setRepositories(repositories);
     searchResults.setRepositoryCount(repositoriesTotalCount);
     return searchResults;

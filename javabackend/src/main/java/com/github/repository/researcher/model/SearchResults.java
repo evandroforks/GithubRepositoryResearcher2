@@ -4,21 +4,11 @@ import java.util.ArrayList;
 
 public class SearchResults {
 
-  private int nextPage;
-
   private boolean hasMorePages;
 
   private int repositoryCount;
 
   private ArrayList<Repository> repositories;
-
-  public int getNextPage() {
-    return nextPage;
-  }
-
-  public void setNextPage(int nextPage) {
-    this.nextPage = nextPage;
-  }
 
   public boolean isHasMorePages() {
     return hasMorePages;
