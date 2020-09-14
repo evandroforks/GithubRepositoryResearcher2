@@ -65,7 +65,6 @@ export interface Repository {
 }
 
 export interface RepositoryResults {
-  nextPage: number,
   hasMorePages: boolean,
   repositoryCount: number,
   repositories: Array<Repository>,

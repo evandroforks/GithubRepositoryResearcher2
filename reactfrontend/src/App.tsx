@@ -30,8 +30,6 @@ class App extends React.Component<AppProps, AppState> {
   private backEndPort: string;
   private backEndIp: string;
   private itemsPerPage: number;
-  private previousPage: number;
-  private nextPage: number;
   private hasMorePages: boolean;
   private actualSearchPage: number;
 
@@ -50,8 +48,6 @@ class App extends React.Component<AppProps, AppState> {
 
     this.hasSendSearchQuery = false
     this.searchQuery = ""
-    this.nextPage = 1
-    this.previousPage = 0
     this.itemsPerPage = 2
     this.hasMorePages = false
     this.actualSearchPage = 0
@@ -64,7 +60,7 @@ class App extends React.Component<AppProps, AppState> {
       windowHeight: 0,
       errorMessage: "",
       isSearching: false,
-      repositoryResults: {nextPage: 1, hasMorePages: false, repositoryCount: 0, repositories: []}
+      repositoryResults: {hasMorePages: false, repositoryCount: 0, repositories: []}
     };
   }
 
@@ -234,8 +230,6 @@ class App extends React.Component<AppProps, AppState> {
   nextSearchPage(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     if(this.hasMorePages) {
       this.actualSearchPage += 1
-      this.previousPage = this.nextPage
-
       this.sendSearchQuery(this.searchQuery, false)
     }
   }
@@ -244,24 +238,12 @@ class App extends React.Component<AppProps, AppState> {
     if(this.actualSearchPage > 0) {
       this.actualSearchPage -= 1
 
-      if(this.actualSearchPage === 0){
-        this.nextPage = 1
-        this.hasMorePages = false
-      }
-      else {
-        this.nextPage = this.previousPage
-      }
-
       this.sendSearchQuery(this.searchQuery, false)
     }
   }
 
   sendSearchQuery(searchQuery: string, restart = true) {
-    // console.log("Sending searchQuery", searchQuery, "nextPage", this.nextPage)
-    if(restart && this.searchQuery === searchQuery) {
-      this.nextPage = 1
-      this.hasMorePages = false
-    }
+    // console.log("Sending searchQuery", searchQuery)
 
     this.searchQuery = searchQuery
     this.setState({ isSearching: true })
@@ -274,7 +256,7 @@ class App extends React.Component<AppProps, AppState> {
         body: JSON.stringify(
           {
             query: searchQuery,
-            page: this.nextPage,
+            page: this.actualSearchPage + 1,
             itemsPerPage: this.itemsPerPage,
           }
           ),
@@ -295,7 +277,6 @@ class App extends React.Component<AppProps, AppState> {
           repositories_response.then(
             (response: RepositoryResults) => {
               // console.log('Server response:', response);
-              this.nextPage = response.nextPage
               this.hasMorePages = response.hasMorePages
 
               this.setState({
