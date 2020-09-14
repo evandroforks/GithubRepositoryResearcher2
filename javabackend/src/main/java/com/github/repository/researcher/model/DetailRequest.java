@@ -1,7 +1,5 @@
 package com.github.repository.researcher.model;
 
-import java.util.ArrayList;
-
 public class DetailRequest {
 
   private String nameWithOwner;

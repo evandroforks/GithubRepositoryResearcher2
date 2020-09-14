@@ -1,7 +1,5 @@
 package com.github.repository.researcher.model;
 
-import java.util.ArrayList;
-
 public class DetailResults {
 
   private int openIssuesCount;

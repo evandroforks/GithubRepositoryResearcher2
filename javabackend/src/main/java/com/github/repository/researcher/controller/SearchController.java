@@ -4,8 +4,8 @@ import com.github.repository.researcher.model.DetailRequest;
 import com.github.repository.researcher.model.DetailResults;
 import com.github.repository.researcher.model.RepositoriesList;
 import com.github.repository.researcher.model.Repository;
-import com.github.repository.researcher.model.SearchResults;
 import com.github.repository.researcher.model.SearchRequest;
+import com.github.repository.researcher.model.SearchResults;
 import com.github.repository.researcher.model.UserRequest;
 import com.github.repository.researcher.service.SearchService;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 @RestController
 public class SearchController {
@@ -70,7 +69,6 @@ public class SearchController {
     return searchService.detail(detailRequest);
   }
 
-
   /**
    * {@code POST} end point to list all repositories from a user.
    *
@@ -85,6 +83,7 @@ public class SearchController {
    *
    * <p>Returns a JSON Array with all repositories found. See {@link Repository} for a list of
    * attributes.
+   *
    * @return
    */
   @PostMapping("/listRepositories")

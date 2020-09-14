@@ -57,19 +57,12 @@ public class SearchService {
     this.checkRateLimit(repositoresRawRequest);
 
     final JsonObject repositoriesRawJson =
-        repositoresRawRequest
-            .as(JsonResponse.class)
-            .json()
-            .readObject();
+        repositoresRawRequest.as(JsonResponse.class).json().readObject();
 
     final List<JsonObject> repositoriesRaw =
-        repositoriesRawJson
-            .getJsonArray("items")
-            .getValuesAs(JsonObject.class);
+        repositoriesRawJson.getJsonArray("items").getValuesAs(JsonObject.class);
 
-    final int repositoriesTotalCount =
-        repositoriesRawJson
-            .getInt("total_count");
+    final int repositoriesTotalCount = repositoriesRawJson.getInt("total_count");
 
     ArrayList<Repository> repositories = new ArrayList<>();
     for (final JsonObject item : repositoriesRaw) {
@@ -99,22 +92,14 @@ public class SearchService {
     DetailResults detailResults = new DetailResults();
 
     final Response repositoryInfoResponse =
-        github
-            .entry()
-            .uri()
-            .path("/repos/" + detailRequest.getNameWithOwner())
-            .back()
-            .fetch();
+        github.entry().uri().path("/repos/" + detailRequest.getNameWithOwner()).back().fetch();
 
     this.checkRateLimit(repositoryInfoResponse);
 
     final JsonObject repositoryInfo =
-        repositoryInfoResponse
-            .as(JsonResponse.class)
-            .json()
-            .readObject();
+        repositoryInfoResponse.as(JsonResponse.class).json().readObject();
 
-        detailResults.setCreatedAt(repositoryInfo.getString("created_at"));
+    detailResults.setCreatedAt(repositoryInfo.getString("created_at"));
     detailResults.setOpenIssuesCount(repositoryInfo.getInt("open_issues"));
 
     final JsonObject repositoryLanguagesJson =
@@ -150,13 +135,10 @@ public class SearchService {
     this.checkRateLimit(userRepositoriesRequest);
 
     final JsonArray userRepositories =
-        userRepositoriesRequest
-            .as(JsonResponse.class)
-            .json()
-            .readArray();
+        userRepositoriesRequest.as(JsonResponse.class).json().readArray();
 
     for (final JsonValue item : userRepositories) {
-      JsonObject repository = (JsonObject)item;
+      JsonObject repository = (JsonObject) item;
       repositories.add(repository.getString("name"));
     }
 
@@ -172,7 +154,7 @@ public class SearchService {
   }
 
   private void checkRateLimit(Response response) {
-    if(response.status() == 403) {
+    if (response.status() == 403) {
       final String errorMessage = String.format("Error: GitHub Rate Limit Usage exceeded!");
       logger.warn(errorMessage);
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errorMessage);
