@@ -232,7 +232,9 @@ export class Content extends React.Component<RepositoryItemProps, RepositoryItem
 
     message = message.split(" ").join("&nbsp;");
     message = message.split("\n").join("<br/>");
-    this.setState({ errorMessage: message })
+    if(this) {
+      this.setState({ errorMessage: message })
+    }
   }
 };
 
