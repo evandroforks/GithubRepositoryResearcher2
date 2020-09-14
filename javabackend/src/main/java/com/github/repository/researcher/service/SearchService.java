@@ -49,16 +49,23 @@ public class SearchService {
             .back()
             .fetch();
 
-    final List<JsonObject> repositoresRaw =
+    final JsonObject repositoriesRawJson =
         repositoresRawRequest
             .as(JsonResponse.class)
             .json()
-            .readObject()
+            .readObject();
+
+    final List<JsonObject> repositoriesRaw =
+        repositoriesRawJson
             .getJsonArray("items")
             .getValuesAs(JsonObject.class);
 
+    final int repositoriesTotalCount =
+        repositoriesRawJson
+            .getInt("total_count");
+
     ArrayList<Repository> repositories = new ArrayList<>();
-    for (final JsonObject item : repositoresRaw) {
+    for (final JsonObject item : repositoriesRaw) {
       Repository repository = new Repository();
 
       String repositoryName = item.getString("name");
@@ -78,6 +85,7 @@ public class SearchService {
     searchResults.setHasMorePages(this.hasMorePages(repositoresRawRequest));
     searchResults.setNextPage(searchRequest.getPage() + 1);
     searchResults.setRepositories(repositories);
+    searchResults.setRepositoryCount(repositoriesTotalCount);
     return searchResults;
   }
 
