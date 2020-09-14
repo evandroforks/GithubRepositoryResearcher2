@@ -80,7 +80,7 @@ export class Content extends React.Component<RepositoryItemProps, RepositoryItem
             <b>Top Language</b>: {this.state.repositoryDetails?.mainLanguage}, { }
             <b>User Repositories</b>: {this.state.userRepositories.map((name: string, index: number) => {
                 return (
-                  <span key={name + index}><b>{index + 1})</b> { } {name}, </span>
+                  <div key={name + index}><b>{index + 1})</b> { } {name}</div>
                 )
               }
             )}
