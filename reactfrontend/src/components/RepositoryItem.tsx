@@ -28,7 +28,6 @@ interface RepositoryItemProps {
 }
 
 interface RepositoryItemState {
-  itemPage: number,
   hasMorePages: boolean,
   nextPage: number,
   errorMessage: string,
@@ -49,7 +48,6 @@ export class Content extends React.Component<RepositoryItemProps, RepositoryItem
     this.loadUserRepositories = this.loadUserRepositories.bind(this)
 
     this.state = {
-      itemPage: 0,
       isShowingDetails: false,
       errorMessage: "",
       hasMorePages: true,
