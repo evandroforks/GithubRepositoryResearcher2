@@ -150,7 +150,6 @@ public class SearchService {
 
     repositoriesList.setRepositories(repositories);
     repositoriesList.setHasMorePages(this.hasMorePages(userRepositoriesRequest));
-    repositoriesList.setNextPage(userRequest.getPage() + 1);
     return repositoriesList;
   }
 

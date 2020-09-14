@@ -208,7 +208,7 @@ export class Content extends React.Component<RepositoryItemProps, RepositoryItem
 
                 this.setState({
                   userRepositories: userRepositories,
-                  nextPage: response.nextPage,
+                  nextPage: this.state.nextPage + 1,
                   hasMorePages: response.hasMorePages,
                   isLoadingRepositories: false,
                 });
