@@ -4,21 +4,11 @@ import java.util.ArrayList;
 
 public class RepositoriesList {
 
-  private String rateLimit;
-
   private int nextPage;
 
   private boolean hasMorePages;
 
   private ArrayList<String> repositories;
-
-  public String getRateLimit() {
-    return rateLimit;
-  }
-
-  public void setRateLimit(String rateLimit) {
-    this.rateLimit = rateLimit;
-  }
 
   public int getNextPage() {
     return nextPage;

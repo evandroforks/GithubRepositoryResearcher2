@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public class SearchResults {
 
-  private String rateLimit;
-
   private String lastItemId;
 
   private boolean hasMorePages;
@@ -13,14 +11,6 @@ public class SearchResults {
   private int repositoryCount;
 
   private ArrayList<Repository> repositories;
-
-  public String getRateLimit() {
-    return rateLimit;
-  }
-
-  public void setRateLimit(String rateLimit) {
-    this.rateLimit = rateLimit;
-  }
 
   public String getLastItemId() {
     return lastItemId;

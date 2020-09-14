@@ -48,7 +48,6 @@ public class SearchController {
     ArrayList<Repository> repositories = searchService.get(searchRequest);
     SearchResults searchResults = new SearchResults();
     searchResults.setRepositories(repositories);
-    searchResults.setRateLimit("");
     return searchResults;
   }
 
@@ -95,8 +94,6 @@ public class SearchController {
   @ResponseStatus(HttpStatus.CREATED)
   public RepositoriesList runListRepositories(@RequestBody UserRequest userRequest)
       throws IOException {
-    RepositoriesList list = searchService.list(userRequest);
-    list.setRateLimit("");
-    return list;
+    return searchService.list(userRequest);
   }
 }

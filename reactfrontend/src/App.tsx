@@ -64,7 +64,7 @@ class App extends React.Component<AppProps, AppState> {
       windowHeight: 0,
       errorMessage: "",
       isSearching: false,
-      repositoryResults: {rateLimit: "", lastItemId: null, hasMorePages: false, repositoryCount: 0, repositories: []}
+      repositoryResults: {lastItemId: null, hasMorePages: false, repositoryCount: 0, repositories: []}
     };
   }
 
@@ -295,7 +295,6 @@ class App extends React.Component<AppProps, AppState> {
           repositories_response.then(
             (response: RepositoryResults) => {
               // console.log('Server response:', response);
-              // console.log( response.rateLimit );
               this.lastItemId = response.lastItemId
               this.hasMorePages = response.hasMorePages
 
