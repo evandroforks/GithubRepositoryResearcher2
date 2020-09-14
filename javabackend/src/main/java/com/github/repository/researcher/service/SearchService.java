@@ -149,8 +149,11 @@ public class SearchService {
 
   private boolean hasMorePages(Response userRepositoriesRequest) {
     Map<String, List<String>> headers = userRepositoriesRequest.headers();
-    String link = headers.get("Link").toString();
-    return link.contains("last");
+    List<String> link = headers.get("Link");
+    if (link != null) {
+        return link.toString().contains("last");
+    }
+    return false;
   }
 
   private void checkRateLimit(Response response) {
