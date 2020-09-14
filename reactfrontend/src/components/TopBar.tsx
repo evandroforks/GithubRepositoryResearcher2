@@ -24,9 +24,9 @@ const TopBar = ({ styles }: {styles: Styles}) => {
       key={styles.topBarHeight}
       data-multiline={true}
     >
-      <span>{`😺️`}</span>
+      <span></span>
         { styles.isTitleCollapsed ? "GH RS 2" : "GitHub Repository Researcher 2" }
-      <span>{`⚙️`}</span>
+      <span></span>
     </div>
   );
 };
