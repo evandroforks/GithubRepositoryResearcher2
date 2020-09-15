@@ -27,7 +27,10 @@ After starting the project:
 1. The Java backend API will be available on the URL: **`http://127.0.0.1:8081/researcher/<API_NAME>`**
 1. The React frontend will be available on the URL: **`http://127.0.0.1:3000/`**
 
-See the **`src/main/resources/application.properties`** file for server configurations.
+See the **`src/main/resources/application.properties`** file for the Java Server configurations.
+
+1. **`src/main/resources/application.properties`**
+    Controls the debug and runtime information about the system.
 
 
 ### Restful API
