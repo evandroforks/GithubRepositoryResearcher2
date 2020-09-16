@@ -18,7 +18,7 @@ Then, to run the backend just call:
 
 To run the frontend just call:
 1. **`> reactfrontend$ npm install`**
-1. **`> reactfrontend$ mpn start`**
+1. **`> reactfrontend$ npm start`**
 
 Alternatively, you can install **`IntelliJ IDEA 2020`**,
 go to the menu **`File -> New -> Project from Existing Sources`** and select the **`pom.xml`** project file.
