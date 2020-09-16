@@ -39,3 +39,22 @@ See the **`src/main/resources/application.properties`** file for the Java Server
 1. **`/detailRequest`** is Restful endpoint. See **`SearchController`** and **`DetailRequest`** for the parameter details.
 1. **`/listRepositories`** is Restful endpoint. See **`SearchController`** and **`UserRequest`** for the parameter details.
 
+### Docker
+
+You can run this project directly from docker.
+To pull a image from docker hub and run it locally,
+you can run the command:
+1. **`docker login`** (you may try to skip this)
+1. **`docker run --network="host" evandrocoan/ubuntu18nodejsjavagithub`**
+1. Note: Due to new docker hub policies,
+   images older than 6 months are going to be deleted for free accounts.
+   Therefore,
+   if you do not find this image on docker hub,
+   see [Dockerfile-all](Dockerfile-all) file for instructions.
+
+Note: Due to the backend ip address to be hardcoded on **`reactfrontend/src/App.tsx`**,
+the frontend will only be able to access the backend if they are accessed locally,
+i.e., the browser and the backend are both running on the ip address **`127.0.0.1`**.
+
+TODO: This limitation can be fixed by passing the backend ip address to the frontend
+when running the docker command or find some other way to pass it.
